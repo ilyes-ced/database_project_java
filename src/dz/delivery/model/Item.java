@@ -10,6 +10,24 @@ public class Item {
     private String description;
     private List<OrderLine> orderLines; // Represents a one-to-many relationship with OrderLine class
 
+
+
+
+    // constructor
+    public Item(
+        int itemId,
+        String name,
+        double price,
+        String description,
+        List<OrderLine> orderLines
+    ){
+        this.itemId = itemId;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.orderLines = orderLines;
+    }
+
     // Getter and Setter for itemId
     public int getItemId() {
         return itemId;

@@ -9,6 +9,26 @@ public class Agent {
     private String phoneNumber;
     private String ipAddr;
 
+
+    // constructor method
+    public Agent(
+        int agentId,
+        String firstname,
+        String lastname,
+        String email,
+        String password,
+        String phoneNumber,
+        String ipAddr
+    ){
+        this.agentId = agentId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.ipAddr = ipAddr;
+    }
+
     // Getter and Setter for agentId
     public int getAgentId() {
         return agentId;

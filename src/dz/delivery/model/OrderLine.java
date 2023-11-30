@@ -1,11 +1,31 @@
 package dz.delivery.model;
 
+import java.util.List;
+
 public class OrderLine {
     private int orderLineId;
     private Order order; // Represents a many-to-one relationship with Order class
     private Item item; // Represents a many-to-one relationship with Item class
     private int quantity;
     private String photoFilePath;
+
+
+
+    // constructor
+    public OrderLine(
+        int orderLineId,
+        Order order,
+        Item item,
+        int quantity,
+        String photoFilePath
+    ){
+        this.orderLineId = orderLineId;
+        this.order = order;
+        this.item = item;
+        this.quantity = quantity;
+        this.photoFilePath = photoFilePath;
+    }
+
 
     // Getter and Setter for orderLineId
     public int getOrderLineId() {

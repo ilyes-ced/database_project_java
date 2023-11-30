@@ -16,6 +16,36 @@ public class Order {
     private Date deliveredAt;
     private List<OrderLine> orderLines;
 
+
+
+    // constructor
+    public Order(
+        int orderId,
+        Client client,
+        DeliveryGuy deliveryGuy,
+        Address address,
+        String status,
+        String review,
+        int evaluation,
+        Date createdAt,
+        Date confirmedAt,
+        Date deliveredAt,
+        List<OrderLine> orderLines
+    ){
+        this.orderId = orderId;
+        this.client = client;
+        this.deliveryGuy = deliveryGuy;
+        this.address = address;
+        this.status = status;
+        this.review = review;
+        this.evaluation = evaluation;
+        this.createdAt = createdAt;
+        this.confirmedAt = confirmedAt;
+        this.deliveredAt = deliveredAt;
+        this.orderLines = orderLines;
+    }
+
+
     // Getter and Setter for orderId
     public int getOrderId() {
         return orderId;

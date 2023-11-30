@@ -16,3 +16,6 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 ## Dependency Management
 
 The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+
+
+ c:; cd 'c:\Users\doo\Documents\new_data'; & 'C:\Program Files\Java\jdk-21\bin\java.exe' '@C:\Users\doo\AppData\Local\Temp\cp_5hjltklq90roliit6y7dhvlfo.argfile' 'App'

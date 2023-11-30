@@ -14,7 +14,7 @@ public class Connector {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection conn = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to Oracle database!");
-            conn.close();
+            //conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

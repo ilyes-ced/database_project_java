@@ -1,5 +1,7 @@
 package dz.delivery.model;
 
+import java.util.List;
+
 public class Address {
     private int addressId;
     private String street;
@@ -7,6 +9,23 @@ public class Address {
     private String postalCode;
     private String country;
     private GeoPosition geoPosition; // Represents a one-to-one relationship with GeoPosition class
+
+    // constructor method
+    public Address(
+        int addressId,
+        String street,
+        String city,
+        String postalCode,
+        String country,
+        GeoPosition geoPosition
+    ){
+        this.addressId = addressId;
+        this.street = street;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.geoPosition = geoPosition;
+    }
 
     // Getter and Setter for addressId
     public int getAddressId() {

@@ -12,6 +12,30 @@ public class DeliveryGuy {
     private String phoneNumber;
     private String status;
     private List<Order> orders;
+
+
+    // constructor method
+    public DeliveryGuy(
+        int deliveryGuyId,
+        String firstname,
+        String lastname,
+        String email,
+        String password,
+        String phoneNumber,
+        String status,
+        List<Order> orders
+    ){
+        this.deliveryGuyId = deliveryGuyId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.orders = orders;
+    }
+
+
     // Getter and Setter for deliveryGuyId
     public int getDeliveryGuyId() {
         return deliveryGuyId;

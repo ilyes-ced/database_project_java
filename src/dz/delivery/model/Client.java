@@ -13,6 +13,27 @@ public class Client {
     private String profilePhotoPath;
     private List<Order> orders; // Represents a one-to-many relationship with Order class
 
+    // constructor method
+    public Client(
+        int clientId,    
+        String firstname,
+        String lastname,
+        String email,
+        String password,
+        String phoneNumber,
+        String profilePhotoPath,
+        List<Order> orders
+    ){
+        this.clientId = clientId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.profilePhotoPath = profilePhotoPath;
+        this.orders = orders;
+    }
+
     // Getter and Setter for clientId
     public int getClientId() {
         return clientId;
@@ -78,7 +99,7 @@ public class Client {
 
 
 
-      // Method to add an order for a client
+    // Method to add an order for a client
     public void addOrder(Order order) {
         if (orders == null) {
             orders = new ArrayList<>();
@@ -99,4 +120,24 @@ public class Client {
     public List<Order> getOrders() {
         return orders;
     }
+    
+    // Method to set all orders associated with this client
+    public void setOrders(ArrayList<Order> orders) {
+        this.orders = orders;
+    }
+
+
+
+
+
+    public void createOrder(Order order) {
+        //database methode
+    }
+    public void confirmOrders(Order order) {
+        //database methode
+    }
+    public void review(Order order) {
+        //database methode
+    }
+
 }
