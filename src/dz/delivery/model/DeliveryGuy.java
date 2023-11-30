@@ -1,10 +1,12 @@
 package dz.delivery.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -178,7 +180,7 @@ public class DeliveryGuy {
         pstmt.setString(5, this.getPhoneNumber());
         pstmt.setString(6, this.getStatus());
         pstmt.setInt(7, this.getDeliveryGuyId());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
     // update password
     public void updatePassword(String password) throws SQLException {
@@ -187,15 +189,52 @@ public class DeliveryGuy {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, password);
         pstmt.setLong(2, this.getDeliveryGuyId());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
 
 
-    public void confirmDelivery(Order order) {
-        //database methode
+    public void confirmDelivery(Order order) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql ="update orders set delivered_at='?' where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setDate(1, (Date) Calendar.getInstance().getTime());
+        pstmt.setInt(2, order.getOrderId());
+        int result = pstmt.executeUpdate();
     }
-    public void getMyOrders(Order order) {
-        //database methode
+
+
+
+    // not finished // complex
+    public ArrayList<Order> getMyOrders() throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql = "SELECT * FROM orders WHERE delivery_guy_id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, this.getDeliveryGuyId());
+        
+        ResultSet resultSet = pstmt.executeQuery();
+
+        ArrayList<Order> my_order = new ArrayList<Order>();
+        // Process the Results
+        while (resultSet.next()) {
+            int client_id =resultSet. getInt("client_id");
+            int delivery_guy_id =resultSet. getInt("delivery_guy_id");
+            int address_id =resultSet. getInt("address_id");
+            
+            Order order = new Order(
+                resultSet.getInt("order_id"),
+                resultSet.getInt("client_id"),
+                resultSet.getInt("delivery_guy_id"),
+                resultSet.getInt("address_id"),
+                resultSet.getString("status"),
+                resultSet.getString("review"),
+                resultSet.getInt("evaluation"),
+                resultSet.getDate("created_at"),
+                resultSet.getDate("confirmed_at"),
+                resultSet.getDate("delivered_at")
+            );
+            my_order.add(order);
+        }
+        return my_order;
     }
 
 }

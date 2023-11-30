@@ -1,10 +1,12 @@
 package dz.delivery.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Client {
@@ -167,7 +169,7 @@ public class Client {
         pstmt.setString(5, this.getPhoneNumber());
         pstmt.setString(6, this.getProfilePhotoPath());
         pstmt.setInt(7, this.getClientId());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
     // update password
     public void updatePassword(String password) throws SQLException {
@@ -176,20 +178,48 @@ public class Client {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, password);
         pstmt.setLong(2, this.getClientId());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
 
 
 
-    
-    public void createOrder(Order order) {
+
+    public void createOrder(Order order) throws SQLException {
         //database methode
+        Connection conn = Connector.get_conn();
+        String sql ="insert into order"+
+            "(client_id,delivery_guy_id,address_id,status,review,evaluation,created_at,confirmed_at,delivered_at)"+
+            "VALUES(?,?,?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, order.client.getClientId());
+        pstmt.setInt(2, order.deliveryGuy.getDeliveryGuyId());
+        pstmt.setInt(3, order.address.getAddressId());
+        pstmt.setString(4, order.getStatus());
+        pstmt.setString(5, order.getReview());
+        pstmt.setInt(6, order.getEvaluation());
+        pstmt.setDate(7, (Date) order.getCreatedAt());
+        pstmt.setDate(8, (Date) order.getConfirmedAt());
+        pstmt.setDate(9, (Date) order.getDeliveredAt());
+        int result = pstmt.executeUpdate();
     }
-    public void confirmOrders(Order order) {
-        //database methode
+    public void confirmOrder(Order order) throws SQLException {
+        order.setStatus("confirmed");
+        Connection conn = Connector.get_conn();
+        String sql ="update orders set status='?', confirmed_at=? where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, "confirmed");
+        pstmt.setDate(2, (Date) Calendar.getInstance().getTime());
+        pstmt.setLong(3, order.getOrderId());
+        int result = pstmt.executeUpdate();
     }
-    public void review(Order order) {
-        //database methode
+    public void review(Order order, String review) throws SQLException {
+        order.setStatus("confirmed");
+        Connection conn = Connector.get_conn();
+        String sql ="update orders set review='?' where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, review);
+        pstmt.setLong(2, order.getOrderId());
+        int result = pstmt.executeUpdate();
     }
 
 }

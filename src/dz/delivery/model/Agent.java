@@ -139,7 +139,7 @@ public class Agent {
         pstmt.setString(5, this.getPhoneNumber());
         pstmt.setString(6, this.getIpAddr());
         pstmt.setInt(7, this.getAgentId());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
     // update password
     public void updatePassword(String password) throws SQLException {
@@ -148,7 +148,7 @@ public class Agent {
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, password);
         pstmt.setLong(2, this.getAgentId());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
 
 
@@ -165,9 +165,9 @@ public class Agent {
         pstmt.setString(4, client.getPassword());
         pstmt.setString(5, client.getPhoneNumber());
         pstmt.setString(6, client.getProfilePhotoPath());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
-    
+
     public void createDeliveryGuy(DeliveryGuy deliveryGuy) throws SQLException {
         Connection conn = Connector.get_conn();
         String sql ="INSERT INTO clients(firstname, lastname, email, password, phoneNumber, status) VALUES('?','?',?,'?','?','?')";
@@ -178,7 +178,7 @@ public class Agent {
         pstmt.setString(4, deliveryGuy.getPassword());
         pstmt.setString(5, deliveryGuy.getPhoneNumber());
         pstmt.setString(6, deliveryGuy.getStatus());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
     
     public void createItem(Item item) throws SQLException {
@@ -188,6 +188,6 @@ public class Agent {
         pstmt.setDouble(1, item.getPrice());
         pstmt.setString(2, item.getName());
         pstmt.setString(3, item.getDescription());
-        ResultSet result = pstmt.executeQuery();
+        int result = pstmt.executeUpdate();
     }
 }

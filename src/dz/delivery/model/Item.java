@@ -1,5 +1,8 @@
 package dz.delivery.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +87,16 @@ public class Item {
 
 
 
-
+    public void updateStatus(double price, String name, String description) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql ="update orders set price=?,name='?',description='?' where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setDouble(1, price);
+        pstmt.setString(2, name);
+        pstmt.setString(3, description);
+        pstmt.setInt(4, this.getItemId());
+        int result = pstmt.executeUpdate();
+    }
 
 
 }

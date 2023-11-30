@@ -1,21 +1,25 @@
 package dz.delivery.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class Order {
-    private int orderId;
-    private Client client; // Represents a many-to-one relationship with Client class
-    private DeliveryGuy deliveryGuy; // Represents a many-to-one relationship with DeliveryGuy class
-    private Address address; // Represents a many-to-one relationship with Address class
-    private String status;
-    private String review;
-    private int evaluation;
-    private Date createdAt;
-    private Date confirmedAt;
-    private Date deliveredAt;
-    private List<OrderLine> orderLines;
+    public int orderId;
+    public Client client; // Represents a many-to-one relationship with Client class
+    public DeliveryGuy deliveryGuy; // Represents a many-to-one relationship with DeliveryGuy class
+    public Address address; // Represents a many-to-one relationship with Address class
+    public String status;
+    public String review;
+    public int evaluation;
+    public Date createdAt;
+    public Date confirmedAt;
+    public Date deliveredAt;
+    public List<OrderLine> orderLines;
 
 
 
@@ -218,6 +222,36 @@ public class Order {
     public void removeOrderLine(OrderLine orderLine){
         if( getOrderLines().contains(orderLine) ) { getOrderLines().remove(orderLine); orderLine.setOrder(null); }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void updateStatus(String status) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql ="update orders set status='?' where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, status);
+        pstmt.setInt(2, this.getOrderId());
+        int result = pstmt.executeUpdate();
+    }
+
+
+
+
 
 
 }
