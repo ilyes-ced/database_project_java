@@ -1,5 +1,11 @@
 package dz.delivery.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
 public class Agent {
     private int agentId;
     private String firstname;
@@ -93,4 +99,95 @@ public class Agent {
     }
 
     // Other methods...
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // update user agent
+    public void updateUser(
+        String firstname,
+        String lastname,
+        String email,
+        String password,
+        String phoneNumber,
+        String ipAddr
+    ) throws SQLException {
+        Connection conn = Connector.get_conn();
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.ipAddr = ipAddr;
+
+
+        String sql ="update agents set firstname='?', lastname='?', email='?', password='?', phone_number='?', ip_addr='?' where agent_id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, this.getFirstname());
+        pstmt.setString(2, this.getLastname());
+        pstmt.setString(3, this.getEmail());
+        pstmt.setString(4, this.getPassword());
+        pstmt.setString(5, this.getPhoneNumber());
+        pstmt.setString(6, this.getIpAddr());
+        pstmt.setInt(7, this.getAgentId());
+        ResultSet result = pstmt.executeQuery();
+    }
+    // update password
+    public void updatePassword(String password) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql ="update agents set password='?' where agent_id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, password);
+        pstmt.setLong(2, this.getAgentId());
+        ResultSet result = pstmt.executeQuery();
+    }
+
+
+
+
+
+    public void createClient(Client client) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql ="INSERT INTO clients(firstname, lastname, email, password, phoneNumber, profile_photo_path) VALUES('?','?',?,'?','?','?')";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, client.getFirstname());
+        pstmt.setString(2, client.getLastname());
+        pstmt.setString(3, client.getEmail());
+        pstmt.setString(4, client.getPassword());
+        pstmt.setString(5, client.getPhoneNumber());
+        pstmt.setString(6, client.getProfilePhotoPath());
+        ResultSet result = pstmt.executeQuery();
+    }
+    
+    public void createDeliveryGuy(DeliveryGuy deliveryGuy) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql ="INSERT INTO clients(firstname, lastname, email, password, phoneNumber, status) VALUES('?','?',?,'?','?','?')";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, deliveryGuy.getFirstname());
+        pstmt.setString(2, deliveryGuy.getLastname());
+        pstmt.setString(3, deliveryGuy.getEmail());
+        pstmt.setString(4, deliveryGuy.getPassword());
+        pstmt.setString(5, deliveryGuy.getPhoneNumber());
+        pstmt.setString(6, deliveryGuy.getStatus());
+        ResultSet result = pstmt.executeQuery();
+    }
+    
+    public void createItem(Item item) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql ="INSERT INTO clients(price,name,description) VALUES('?','?',?,'?','?','?')";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setDouble(1, item.getPrice());
+        pstmt.setString(2, item.getName());
+        pstmt.setString(3, item.getDescription());
+        ResultSet result = pstmt.executeQuery();
+    }
 }

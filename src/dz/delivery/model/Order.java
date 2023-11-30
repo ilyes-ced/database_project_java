@@ -1,5 +1,6 @@
 package dz.delivery.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -154,5 +155,69 @@ public class Order {
 
     // ....................................................;
 
+
+    // Method to add an client for an order
+    public void addClient(Client client) {
+        if (!client.getOrders().contains(this)) {
+            if(getClient() != null){
+                removeClient(this);
+            }
+            setClient(client);
+            client.addOrder(this);
+        }
+    }
+
+    // Method to remove an client associated with a client
+    public void removeClient(Order order) {
+        getClient().removeOrder(this);
+        setClient(null);
+    }
+
+
+
+
     
+    //public void addOrderLine(OrderLine orderLine){
+    //    if( !getOrderLines().contains(orderLine) ){
+    //        orderLine.setOrder(this);
+    //        getOrderLines().add(orderLine);
+    //    }
+    //}
+    //public void removeOrderLine(OrderLine orderLine){
+    //    if( getOrderLines().contains(orderLine) ) {
+    //        getOrderLines().remove(orderLine);
+    //        orderLine.setOrder(null);
+    //    }
+    //}
+
+
+    //public void addOrderLine(OrderLine orderLine){
+    //    if( !getOrderLines().contains(orderLine) ){
+    //        if(orderLine.getOrder() != null) orderLine.removeOrder();
+    //        orderLine.setOrder(this);
+    //        getOrderLines().add(orderLine);
+    //    }
+    //}
+    //public void removeOrderLine(OrderLine orderLine){
+    //    if( getOrderLines().contains(orderLine) ){
+    //        getOrderLines().remove(orderLine); orderLine.setOrder(null);
+    //    }
+    //}
+
+
+
+
+    
+    public void addOrderLine(OrderLine orderLine){
+        if( !getOrderLines().contains(orderLine) ){
+            if(orderLine.getOrder() != null) orderLine.removeOrder();
+            orderLine.setOrder(this);
+            getOrderLines().add(orderLine);
+        }
+    }
+    public void removeOrderLine(OrderLine orderLine){
+        if( getOrderLines().contains(orderLine) ) { getOrderLines().remove(orderLine); orderLine.setOrder(null); }
+    }
+
+
 }

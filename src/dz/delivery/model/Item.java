@@ -76,16 +76,15 @@ public class Item {
         orderLine.setItem(this); // Assuming OrderLine class has a corresponding item field
     }
 
-    // Method to remove an order line associated with an item
-    public void removeOrderLine(OrderLine orderLine) {
-        if (orderLines != null) {
-            orderLines.remove(orderLine);
-            orderLine.setItem(null); // Clear the association with this item
-        }
-    }
 
-    // Method to retrieve all order lines associated with this item
-    public List<OrderLine> getOrderLines() {
-        return orderLines;
-    }
+    
+
+
+
+
+
+
+
+
+
 }

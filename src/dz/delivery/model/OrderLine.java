@@ -73,4 +73,22 @@ public class OrderLine {
     }
 
 
+
+
+
+    public void addOrder(Order order){
+        if(!order.getOrderLines().contains(this)){
+            if(getOrder() != null) removeOrder();
+            setOrder(order);
+            order.addOrderLine(this);
+        }
+    }
+    public void removeOrder(){ getOrder().removeOrderLine(this); setOrder(null); }
+
+
+
+
+
+
+
 }

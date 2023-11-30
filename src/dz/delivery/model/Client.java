@@ -1,5 +1,9 @@
 package dz.delivery.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,18 +105,18 @@ public class Client {
 
     // Method to add an order for a client
     public void addOrder(Order order) {
-        if (orders == null) {
-            orders = new ArrayList<>();
+        if( !getOrders().contains(order) ){
+            if(order.getClient() != null) order.removeClient(order);
+            order.setClient(this);
+            orders.add(order);
         }
-        orders.add(order);
-        order.setClient(this); // Assuming Order class has a corresponding client field
     }
 
     // Method to remove an order associated with a client
     public void removeOrder(Order order) {
-        if (orders != null) {
-            orders.remove(order);
-            order.setClient(null); // Clear the association with this client
+        if(getOrders().contains(order)){
+            getOrders().remove(order);
+            order.setClient(null);
         }
     }
 
@@ -130,6 +134,54 @@ public class Client {
 
 
 
+
+
+
+
+
+
+        // update user agent
+    public void updateUser(
+        String firstname,
+        String lastname,
+        String email,
+        String password,
+        String phoneNumber,
+        String profilePhotoPath
+    ) throws SQLException {
+        Connection conn = Connector.get_conn();
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.profilePhotoPath = profilePhotoPath;
+
+
+        String sql ="update agents set firstname='?', lastname='?', email='?', password='?', phoneNumber='?', ipaddr='?' where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, this.getFirstname());
+        pstmt.setString(2, this.getLastname());
+        pstmt.setString(3, this.getEmail());
+        pstmt.setString(4, this.getPassword());
+        pstmt.setString(5, this.getPhoneNumber());
+        pstmt.setString(6, this.getProfilePhotoPath());
+        pstmt.setInt(7, this.getClientId());
+        ResultSet result = pstmt.executeQuery();
+    }
+    // update password
+    public void updatePassword(String password) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql ="update agents set password='?' where id=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, password);
+        pstmt.setLong(2, this.getClientId());
+        ResultSet result = pstmt.executeQuery();
+    }
+
+
+
+    
     public void createOrder(Order order) {
         //database methode
     }
