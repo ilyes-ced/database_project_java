@@ -9,8 +9,8 @@ public class Connector {
 
     public Connection main() {
         String url = "jdbc:oracle:thin:@localhost:1521:xe";
-        String username = "system";
-        String password = "11062001";
+        String username = "username";
+        String password = "password";
 
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
