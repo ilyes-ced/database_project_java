@@ -1,23 +1,15 @@
-## Getting Started
+you need the java extention pack to run this project with vscode
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+https://open-vsx.org/extension/vscjava/vscode-java-pack
 
-## Folder Structure
+press the play/run button on vscode top bar right side
 
-The workspace contains two folders by default, where:
+or place project in the Documents folder and run with:
+```bash
+# replace <project_folder_name> nad <username>
+c:; cd 'c:\Users\<username>\Documents\<project_folder_name>'; & 'C:\Program Files\Java\jdk-21\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\<username>\Documents\<project_folder_name>\bin' 'App'
+# if the first doesnt word (i got that error)
+c:; cd 'c:\Users\<username>\Documents\<project_folder_name>'; & 'C:\Program Files\Java\jdk-21\bin\java.exe' '--enable-preview' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\<username>\Documents\<project_folder_name>\bin' 'App'
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
-
-
-
-run with: 
- c:; cd 'c:\Users\doo\Documents\new_data'; & 'C:\Program Files\Java\jdk-21\bin\java.exe' '@C:\Users\doo\AppData\Local\Temp\cp_5hjltklq90roliit6y7dhvlfo.argfile' 'App'
+c:; cd 'c:\Users\<username>\Documents\<project_folder_name>'; & 'C:\Program Files\Java\jdk-21\bin\java.exe' '@C:\Users\<username>\AppData\Local\Temp\cp_5hjltklq90roliit6y7dhvlfo.argfile' 'App'
+```
