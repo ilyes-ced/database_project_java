@@ -93,3 +93,95 @@ CREATE TABLE order_lines(
 );
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+SELECT * FROM o orders, c clients, a addresses, d delivery_guys
+WHERE delivery_guy_id=? and
+o.client_id=c.id and
+o.delivery_guy_id=d.id and
+o.address_id=a.id
+
+
+
+
+
+
+SELECT *
+FROM orders o
+INNER JOIN clients c ON o.client_id = c.client_id
+INNER JOIN addresses a ON o.src_address_id = a.address_id and o.dist_address_id = a.address_id 
+INNER JOIN delivery_guys d ON o.delivery_guy_id = d.delivery_guy_id and d.delivery_guy_id=1;
+
+
+
+SELECT *
+FROM orders o
+INNER JOIN clients c ON o.client_id = c.client_id
+INNER JOIN addresses a_src ON o.src_address_id = a_src.address_id
+INNER JOIN addresses a_dist ON o.dist_address_id = a_dist.address_id 
+INNER JOIN delivery_guys d ON o.delivery_guy_id = d.delivery_guy_id 
+where d.delivery_guy_id = 1;
+
+
+SELECT *
+FROM orders o
+LEFT JOIN clients c ON o.client_id = c.client_id
+LEFT JOIN addresses a_src ON o.src_address_id = a_src.address_id
+LEFT JOIN addresses a_dist ON o.dist_address_id = a_dist.address_id 
+LEFT JOIN delivery_guys d ON o.delivery_guy_id = d.delivery_guy_id 
+where d.delivery_guy_id = 1;
+
+
+/* add geoposition */
+SELECT
+o.order_id, o.client_id, o.delivery_guy_id, o.src_address_id, o.dist_address_id, o.status, o.review, o.evaluation, o.created_at, o.confirmed_at, o.delivered_at,
+
+c.client_id as client_client_id, c.firstname as client_firstname, c.lastname as client_lastname, c.email as client_email, c.password as client_password, c.phone_number as client_phone_number, c.profile_photo_path as client_profile_photo_path,
+d.delivery_guy_id as delivery_delivery_guy_id, d.firstname as delivery_firstname, d.lastname as delivery_lastname, d.email as delivery_email, d.password as delivery_password, d.phone_number as delivery_phone_number, d.status as delivery_status,
+
+a_src.address_id as src_src_address_id, a_src.street as src_street, a_src.city as src_city, a_src.postal_code as src_postal_code, a_src.country as src_country, a_src.geo_position_id as src_geo_position_id,
+a_dist.address_id as dist_dist_address_id, a_dist.street as dist_street, a_dist.city as dist_city, a_dist.postal_code as dist_postal_code, a_dist.country as dist_country, a_dist.geo_position_id as dist_geo_position_id,
+
+geo_src.position_id as src_position_id, geo_src.latitude as src_latitude, geo_src.longitude as src_longitude,
+geo_dist.position_id as dist_position_id, geo_dist.latitude as dist_latitude, geo_dist.longitude as dist_longitude
+FROM orders o
+LEFT JOIN clients c ON o.client_id = c.client_id
+LEFT JOIN addresses a_src ON o.src_address_id = a_src.address_id
+LEFT JOIN addresses a_dist ON o.dist_address_id = a_dist.address_id 
+LEFT JOIN geo_position geo_src ON o.src_address_id = geo_src.position_id
+LEFT JOIN geo_position geo_dist ON o.dist_address_id = geo_dist.position_id 
+LEFT JOIN delivery_guys d ON o.delivery_guy_id = d.delivery_guy_id 
+where d.delivery_guy_id = 1;
+
+
+
+"SELECT"+
+"o.order_id, o.client_id, o.delivery_guy_id, o.src_address_id, o.dist_address_id, o.status, o.review, o.evaluation, o.created_at, o.confirmed_at, o.delivered_at,"+
+"c.client_id as client_client_id, c.firstname as client_firstname, c.lastname as client_lastname, c.email as client_email, c.password as client_password, c.phone_number as client_phone_number, c.profile_photo_path as client_profile_photo_path,"+
+"d.delivery_guy_id as delivery_delivery_guy_id, d.firstname as delivery_firstname, d.lastname as delivery_lastname, d.email as delivery_email, d.password as delivery_password, d.phone_number as delivery_phone_number, d.status as delivery_status,"+
+"a_src.address_id as src_src_address_id, a_src.street as src_street, a_src.city as src_city, a_src.postal_code as src_postal_code, a_src.country as src_country, a_src.geo_position_id as src_geo_position_id,"+
+"a_dist.address_id as dist_dist_address_id, a_dist.street as dist_street, a_dist.city as dist_city, a_dist.postal_code as dist_postal_code, a_dist.country as dist_country, a_dist.geo_position_id as dist_geo_position_id,"+
+"geo_src.position_id as src_position_id, geo_src.latitude as src_latitude, geo_src.longitude as src_longitude,"+
+"geo_dist.position_id as dist_position_id, geo_dist.latitude as dist_latitude, geo_dist.longitude as dist_longitude"+
+"FROM orders o"+
+"LEFT JOIN clients c ON o.client_id = c.client_id"+
+"LEFT JOIN addresses a_src ON o.src_address_id = a_src.address_id"+
+"LEFT JOIN addresses a_dist ON o.dist_address_id = a_dist.address_id "+
+"LEFT JOIN geo_position geo_src ON o.src_address_id = geo_src.position_id"+
+"LEFT JOIN geo_position geo_dist ON o.dist_address_id = geo_dist.position_id "+
+"LEFT JOIN delivery_guys d ON o.delivery_guy_id = d.delivery_guy_id "+
+"where d.delivery_guy_id = 1"+
+
+*/
