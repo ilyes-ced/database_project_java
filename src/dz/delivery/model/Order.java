@@ -2,6 +2,7 @@ package dz.delivery.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -259,8 +260,30 @@ public class Order {
         int result = pstmt.executeUpdate();
     }
 
+    public void addOrderLine(OrderLine orderLine) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql = "insert into order_lines(order_id,item_id,quantity,photo_file_path)"+
+        "VALUES(?,?,?,'?')";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, this.getOrderId());
+        pstmt.setInt(2, orderLine.getItem().getItemId());
+        pstmt.setInt(3, orderLine.getQuantity());
+        pstmt.setString(4, orderLine.getPhotoFilePath());
+        int result = pstmt.executeUpdate();
+    }
 
 
+
+
+    public int getTotalPrice(Order order) throws SQLException {
+        Connection conn = Connector.get_conn();
+        String sql = "select sum(price) from items where in (select id from order_lines where order_id=?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, this.getOrderId());
+        ResultSet result = pstmt.executeQuery();
+        int total_price = result.getInt(1);
+        return total_price;
+    }
 
 
 
