@@ -109,9 +109,11 @@ public class DeliveryGuy {
         this.status = status;
     }
     
-    
 
-
+    // Method to retrieve all orders associated with this delivery guy
+    public List<Order> getOrders() {
+        return this.orders;
+    }
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
@@ -134,10 +136,6 @@ public class DeliveryGuy {
         }
     }
 
-    // Method to retrieve all orders associated with this delivery guy
-    public List<Order> getOrders() {
-        return orders;
-    }
 
 
 
@@ -205,9 +203,14 @@ public class DeliveryGuy {
 
 
     // not finished // complex
+    // use joins
     public ArrayList<Order> getMyOrders() throws SQLException {
         Connection conn = Connector.get_conn();
-        String sql = "SELECT * FROM orders WHERE delivery_guy_id=?";
+        String sql = "SELECT * FROM o orders, c clients, a addresses, d delivery_guys" +
+        "WHERE delivery_guy_id=? and" +
+        "o.client_id=c.id and" +
+        "o.delivery_guy_id=d.id and" +
+        "o.address_id=a.id";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, this.getDeliveryGuyId());
         
@@ -216,23 +219,27 @@ public class DeliveryGuy {
         ArrayList<Order> my_order = new ArrayList<Order>();
         // Process the Results
         while (resultSet.next()) {
-            int client_id =resultSet. getInt("client_id");
-            int delivery_guy_id =resultSet. getInt("delivery_guy_id");
-            int address_id =resultSet. getInt("address_id");
+            int client_id = resultSet. getInt("client_id");
+            int delivery_guy_id = resultSet. getInt("delivery_guy_id");
+            int address_id = resultSet. getInt("address_id");
             
-            Order order = new Order(
-                resultSet.getInt("order_id"),
-                resultSet.getInt("client_id"),
-                resultSet.getInt("delivery_guy_id"),
-                resultSet.getInt("address_id"),
-                resultSet.getString("status"),
-                resultSet.getString("review"),
-                resultSet.getInt("evaluation"),
-                resultSet.getDate("created_at"),
-                resultSet.getDate("confirmed_at"),
-                resultSet.getDate("delivered_at")
-            );
-            my_order.add(order);
+            Client client;
+            Client delivery_guy;
+            Client address;
+
+            //Order order = new Order(
+            //    resultSet.getInt("order_id"),
+            //    resultSet.getInt("client_id"),
+            //    resultSet.getInt("delivery_guy_id"),
+            //    resultSet.getInt("address_id"),
+            //    resultSet.getString("status"),
+            //    resultSet.getString("review"),
+            //    resultSet.getInt("evaluation"),
+            //    resultSet.getDate("created_at"),
+            //    resultSet.getDate("confirmed_at"),
+            //    resultSet.getDate("delivered_at")
+            //);
+            //my_order.add(order);
         }
         return my_order;
     }

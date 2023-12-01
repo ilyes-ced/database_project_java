@@ -70,17 +70,28 @@ public class Item {
     public void setOrderLines(List<OrderLine> orderLines) {
         this.orderLines = orderLines;
     }
-
-  public void addOrderLine(OrderLine orderLine) {
-        if (orderLines == null) {
-            orderLines = new ArrayList<>();
-        }
-        orderLines.add(orderLine);
-        orderLine.setItem(this); // Assuming OrderLine class has a corresponding item field
+    public List<OrderLine> getOrderLines() {
+        return this.orderLines;
     }
 
 
     
+
+    
+    // order line item relation
+    public void addOrderLines(OrderLine orderline){
+        if( !getOrderLines().contains(orderline) ){
+            if(orderline.getItem() != null) orderline.removeItem();
+            orderline.setItem(this);
+            getOrderLines().add(orderline);
+        }
+    }
+    public void removeOrderLines(OrderLine orderline){
+        if( getOrderLines().contains(orderline) ) { getOrderLines().remove(orderline); orderline.setItem(null); }
+    }
+ 
+
+
 
 
 

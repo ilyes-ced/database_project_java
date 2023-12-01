@@ -188,18 +188,19 @@ public class Client {
         //database methode
         Connection conn = Connector.get_conn();
         String sql ="insert into order"+
-            "(client_id,delivery_guy_id,address_id,status,review,evaluation,created_at,confirmed_at,delivered_at)"+
-            "VALUES(?,?,?,?,?,?,?,?,?)";
+            "(client_id,delivery_guy_id,src_address_id,dist_address_id,status,review,evaluation,created_at,confirmed_at,delivered_at)"+
+            "VALUES(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, order.client.getClientId());
         pstmt.setInt(2, order.deliveryGuy.getDeliveryGuyId());
-        pstmt.setInt(3, order.address.getAddressId());
-        pstmt.setString(4, order.getStatus());
-        pstmt.setString(5, order.getReview());
-        pstmt.setInt(6, order.getEvaluation());
-        pstmt.setDate(7, (Date) order.getCreatedAt());
-        pstmt.setDate(8, (Date) order.getConfirmedAt());
-        pstmt.setDate(9, (Date) order.getDeliveredAt());
+        pstmt.setInt(3, order.address_src.getAddressId());
+        pstmt.setInt(4, order.address_dist.getAddressId());
+        pstmt.setString(5, order.getStatus());
+        pstmt.setString(6, order.getReview());
+        pstmt.setInt(7, order.getEvaluation());
+        pstmt.setDate(8, (Date) order.getCreatedAt());
+        pstmt.setDate(9, (Date) order.getConfirmedAt());
+        pstmt.setDate(10, (Date) order.getDeliveredAt());
         int result = pstmt.executeUpdate();
     }
     public void confirmOrder(Order order) throws SQLException {

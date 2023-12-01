@@ -74,21 +74,32 @@ public class OrderLine {
 
 
 
-
-
+    // order == orderline relation
     public void addOrder(Order order){
         if(!order.getOrderLines().contains(this)){
             if(getOrder() != null) removeOrder();
             setOrder(order);
-            order.addOrderLine(this);
+            order.addOrderLines(this);
         }
     }
-    public void removeOrder(){ getOrder().removeOrderLine(this); setOrder(null); }
+    public void removeOrder(){ getOrder().removeOrderLines(this); setOrder(null); }
 
 
 
 
 
 
+
+    // orderline == item relation
+
+
+    public void addItem(Item item){
+        if(!item.getOrderLines().contains(this)){
+            if(getItem() != null) removeItem();
+            setItem(item);
+            item.addOrderLines(this);
+        }
+    }
+    public void removeItem(){ getItem().removeOrderLines(this); setItem(null); }
 
 }

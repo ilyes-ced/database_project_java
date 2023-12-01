@@ -12,7 +12,8 @@ public class Order {
     public int orderId;
     public Client client; // Represents a many-to-one relationship with Client class
     public DeliveryGuy deliveryGuy; // Represents a many-to-one relationship with DeliveryGuy class
-    public Address address; // Represents a many-to-one relationship with Address class
+    public Address address_src; // Represents a many-to-one relationship with Address class
+    public Address address_dist; // Represents a many-to-one relationship with Address class
     public String status;
     public String review;
     public int evaluation;
@@ -28,7 +29,8 @@ public class Order {
         int orderId,
         Client client,
         DeliveryGuy deliveryGuy,
-        Address address,
+        Address address_src,
+        Address address_dist,
         String status,
         String review,
         int evaluation,
@@ -40,7 +42,8 @@ public class Order {
         this.orderId = orderId;
         this.client = client;
         this.deliveryGuy = deliveryGuy;
-        this.address = address;
+        this.address_src = address_src;
+        this.address_dist = address_dist;
         this.status = status;
         this.review = review;
         this.evaluation = evaluation;
@@ -82,12 +85,20 @@ public class Order {
     }
 
     // Getter and Setter for Address relationship
-    public Address getAddress() {
-        return address;
+    public Address getAddressSrc() {
+        return address_src;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressSrc(Address address) {
+        this.address_src = address;
+    }
+    // Getter and Setter for Address relationship
+    public Address getAddressDist() {
+        return address_dist;
+    }
+
+    public void setAddressDist(Address address) {
+        this.address_dist = address;
     }
 
     // Getter and Setter for status
@@ -181,46 +192,44 @@ public class Order {
 
 
     
-    //public void addOrderLine(OrderLine orderLine){
-    //    if( !getOrderLines().contains(orderLine) ){
-    //        orderLine.setOrder(this);
-    //        getOrderLines().add(orderLine);
-    //    }
-    //}
-    //public void removeOrderLine(OrderLine orderLine){
-    //    if( getOrderLines().contains(orderLine) ) {
-    //        getOrderLines().remove(orderLine);
-    //        orderLine.setOrder(null);
-    //    }
-    //}
-
-
-    //public void addOrderLine(OrderLine orderLine){
-    //    if( !getOrderLines().contains(orderLine) ){
-    //        if(orderLine.getOrder() != null) orderLine.removeOrder();
-    //        orderLine.setOrder(this);
-    //        getOrderLines().add(orderLine);
-    //    }
-    //}
-    //public void removeOrderLine(OrderLine orderLine){
-    //    if( getOrderLines().contains(orderLine) ){
-    //        getOrderLines().remove(orderLine); orderLine.setOrder(null);
-    //    }
-    //}
-
-
-
-
-    
-    public void addOrderLine(OrderLine orderLine){
-        if( !getOrderLines().contains(orderLine) ){
-            if(orderLine.getOrder() != null) orderLine.removeOrder();
-            orderLine.setOrder(this);
-            getOrderLines().add(orderLine);
+ 
+    // Method to add an deleviry_guy for an order
+    public void addDeliveryGuyy(DeliveryGuy deleviry_guy) {
+        if (!deleviry_guy.getOrders().contains(this)) {
+            if(getDeliveryGuy() != null){
+                removeClient(this);
+            }
+            setDeliveryGuy(deleviry_guy);
+            deleviry_guy.addOrder(this);
         }
     }
-    public void removeOrderLine(OrderLine orderLine){
-        if( getOrderLines().contains(orderLine) ) { getOrderLines().remove(orderLine); orderLine.setOrder(null); }
+
+    // Method to remove an deleviry_guy associated with a deleviry_guy
+    public void removeDeliveryGuy(DeliveryGuy deleviry_guy) {
+        getDeliveryGuy().removeOrder(this);
+        setDeliveryGuy(null);
+    }
+
+    
+
+
+
+
+
+
+
+
+    // order lines
+
+    public void addOrderLines(OrderLine orderline){
+        if( !getOrderLines().contains(orderline) ){
+           if(orderline.getOrder() != null) orderline.removeOrder();
+           orderline.setOrder(this);
+           getOrderLines().add(orderline);
+        }
+    }
+    public void removeOrderLines(OrderLine orderline){
+        if( getOrderLines().contains(orderline) ) { getOrderLines().remove(orderline); orderline.setOrder(null); }
     }
 
 
@@ -229,8 +238,9 @@ public class Order {
 
 
 
-
-
+    // relation with address
+    public void addSrcAddress(Address src_address) { setAddressSrc(src_address); }
+    public void addDistAddress(Address dist_address) { setAddressDist(dist_address); }
 
 
 
