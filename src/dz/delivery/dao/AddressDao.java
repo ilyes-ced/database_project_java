@@ -85,7 +85,7 @@ public class AddressDao extends Dao<Address>{
     }
 
 
-    public ArrayList<Address> findAll() {
+    public ArrayList<Address> findAll() throws SQLException {
         ArrayList<Address> list = new ArrayList<Address>();
         
         Connection conn = Connector.get_conn();
@@ -114,7 +114,7 @@ public class AddressDao extends Dao<Address>{
 
             int id = result.getInt("id");
 
-            list.put(addressId, street, city, postalCode, country, new GeoPosition(position_id, latitude, longitude));
+            list.add(new Address(addressId, street, city, postalCode, country, new GeoPosition(position_id, latitude, longitude)));
         }
         return list;
     }
