@@ -1,21 +1,3 @@
-//package dz.delivery.dao;
-//
-//import java.sql.Connection;
-//
-//import dz.delivery.model.Address;
-//
-//public abstract class AddressDao {
-//    protected Connection con = null;
-//
-//    public AddressDao(Connection con){
-//        this.con = con;
-//    }
-//
-//    public abstract boolean create(Address address);
-//    public abstract boolean delete(Address address);
-//    public abstract boolean update(Address address);
-//    public abstract Address find(int id);
-//}
 package dz.delivery.dao;
 
 
@@ -112,12 +94,27 @@ public class AddressDao extends Dao<Address>{
         ResultSet result = stmt.executeQuery("SELECT * FROM address");
 
         while(result.next()){
+            int addressId = result.getInt("addressId");
+            String street = result.getString("street");
+            String city = result.getString("city");
+            String postalCode = result.getString("postalCode");
+            String country = result.getString("country");
+            int geo_position_id = result.getInt("geo_position_id");
+
+            
+            String sql2 ="SELECT * FROM geo_position where position_id=?";
+            PreparedStatement stmt2 = conn.prepareStatement(sql);
+            stmt2.setInt(1, geo_position_id);
+            ResultSet result2 = stmt.executeQuery();
+            result.next();
+            int position_id = result.getInt("position_id");
+            Double latitude = result.getDouble("latitude");
+            Double longitude = result.getDouble("longitude");
+
+
             int id = result.getInt("id");
-            String nom = result.getString("nom");
-            int prenom = result.getInt("prenom");
 
-
-            list.add(new Address(..., ...));
+            list.put(addressId, street, city, postalCode, country, new GeoPosition(position_id, latitude, longitude));
         }
         return list;
     }
