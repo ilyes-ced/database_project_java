@@ -1,6 +1,5 @@
 package dz.delivery.model;
 
-import java.util.List;
 
 public class OrderLine {
     private int orderLineId;
